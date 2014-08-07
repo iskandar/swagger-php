@@ -329,6 +329,11 @@ class Parser
         }
 
         foreach ($annotations as $annotation) {
+            // Don't process Annotations that are not subclasses of AbstractAnnotation
+            $isSwaggerAnnotation = ($annotation instanceof AbstractAnnotation);
+            if ( ! $isSwaggerAnnotation) {
+                continue;
+            }
             foreach ($this->processors as $processor) {
                 $processor->process($annotation, $context);
             }
